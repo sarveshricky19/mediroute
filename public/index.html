@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediRoute — Drug Supply Chain Monitor</title>
+  <meta name="description" content="AI-powered drug supply chain monitoring for pharmacies and hospitals. Real-time inventory tracking, demand forecasting, and stockout alerts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav" id="main-nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-icon">💊</span> MediRoute
+      </a>
+      <div class="nav__links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="#cta" class="btn btn--sm btn--primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__bg">
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__grid"></div>
+    </div>
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__badge"><span class="hero__badge-dot"></span> Now Serving Pharmacies</div>
+        <h1 class="hero__title">Never Run Out of<br><span class="hero__title-gradient">Essential Medicine</span></h1>
+        <p class="hero__subtitle">AI-powered demand forecasting and real-time alerts keep your pharmacy stocked. Stop guessing. Start predicting.</p>
+        <div class="hero__cta">
+          <a href="#cta" class="btn btn--lg btn--primary">Start Free Trial <span class="btn__arrow">→</span></a>
+          <a href="#features" class="btn btn--lg btn--ghost">See How It Works</a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat"><span class="hero__stat-value">10K+</span><span class="hero__stat-label">Inventory Events/Day</span></div>
+          <div class="hero__stat"><span class="hero__stat-value">AI</span><span class="hero__stat-label">Demand Forecasts</span></div>
+          <div class="hero__stat"><span class="hero__stat-value">₹2K</span><span class="hero__stat-label">Starting Price</span></div>
+        </div>
+      </div>
+      <div class="hero__code">
+        <div class="code-window">
+          <div class="code-window__header">
+            <div class="code-window__dots"><span></span><span></span><span></span></div>
+            <span class="code-window__title">Alert Dashboard</span>
+          </div>
+          <div class="code-window__body" style="padding:0;">
+            <div style="padding:20px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><span style="width:8px;height:8px;border-radius:50%;background:#ef4444;"></span><span style="color:#fca5a5;font-size:0.85rem;font-weight:600;">CRITICAL</span></div>
+              <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:14px;margin-bottom:10px;">
+                <div style="font-weight:600;font-size:0.9rem;">🚨 Paracetamol 500mg — STOCKOUT</div>
+                <div style="color:#a1a1aa;font-size:0.8rem;margin-top:4px;">Stock: 0/500 units. 23 prescriptions pending.</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;margin-top:16px;"><span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;"></span><span style="color:#fcd34d;font-size:0.85rem;font-weight:600;">WARNING</span></div>
+              <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:14px;margin-bottom:10px;">
+                <div style="font-weight:600;font-size:0.9rem;">⚠️ Amoxicillin 250mg — Low Stock</div>
+                <div style="color:#a1a1aa;font-size:0.8rem;margin-top:4px;">15% remaining. Predicted stockout: 3 days.</div>
+              </div>
+              <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:14px;">
+                <div style="font-weight:600;font-size:0.9rem;">📊 AI Forecast Ready</div>
+                <div style="color:#a1a1aa;font-size:0.8rem;margin-top:4px;">Demand spike predicted for antibiotics next week. Restock recommended.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Capabilities</span>
+        <h2 class="section-title">Every Drug, Always In Stock</h2>
+        <p class="section-subtitle">From inventory tracking to AI-driven forecasts and ERP sync — one platform for your entire supply chain.</p>
+      </div>
+      <div class="features__grid">
+        <div class="feature-card feature-card--highlighted">
+          <div class="feature-card__icon">🧠</div>
+          <h3 class="feature-card__title">AI Demand Forecasting</h3>
+          <p class="feature-card__desc">Claude AI analyzes your sales patterns and predicts demand 7-14 days ahead. Know what to restock before you run out.</p>
+          <div class="feature-card__tag">Claude AI</div>
+        </div>
+        <div class="feature-card"><div class="feature-card__icon">🔔</div><h3 class="feature-card__title">Real-time Alerts</h3><p class="feature-card__desc">WebSocket-powered alerts for stockouts, low inventory, overstocking, and drug expiry. Never miss a critical event.</p></div>
+        <div class="feature-card"><div class="feature-card__icon">📊</div><h3 class="feature-card__title">Aggregation Dashboard</h3><p class="feature-card__desc">Category breakdowns, stock value analysis, and expiry tracking — all powered by MongoDB aggregation pipelines.</p></div>
+        <div class="feature-card"><div class="feature-card__icon">🔗</div><h3 class="feature-card__title">ERP Integration</h3><p class="feature-card__desc">SOAP connectors sync with legacy hospital ERP systems. Pull and push inventory data automatically.</p></div>
+        <div class="feature-card"><div class="feature-card__icon">🏢</div><h3 class="feature-card__title">Multi-Tenant SaaS</h3><p class="feature-card__desc">Each pharmacy gets isolated data with JWT auth. Scale from 1 to 1000 pharmacies on the same platform.</p></div>
+        <div class="feature-card"><div class="feature-card__icon">💰</div><h3 class="feature-card__title">Subscription Billing</h3><p class="feature-card__desc">Tiered plans from ₹2,000 to ₹8,000/month based on SKU count. Seamless upgrades and billing history.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Pricing</span>
+        <h2 class="section-title">Plans for Every Pharmacy</h2>
+        <p class="section-subtitle">Start with a 30-day free trial. No credit card required.</p>
+      </div>
+      <div class="pricing__grid">
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__name">Basic</h3>
+            <div class="pricing-card__price"><span class="pricing-card__amount">₹2,000</span><span class="pricing-card__period">/month</span></div>
+          </div>
+          <ul class="pricing-card__features">
+            <li>Up to 100 drug SKUs</li><li>Inventory tracking</li><li>Basic stockout alerts</li><li>Email support</li>
+          </ul>
+          <a href="#cta" class="btn btn--outline btn--full">Start Free Trial</a>
+        </div>
+        <div class="pricing-card pricing-card--popular">
+          <div class="pricing-card__badge">Most Popular</div>
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__name">Standard</h3>
+            <div class="pricing-card__price"><span class="pricing-card__amount">₹5,000</span><span class="pricing-card__period">/month</span></div>
+          </div>
+          <ul class="pricing-card__features">
+            <li>Up to 500 drug SKUs</li><li>AI demand forecasting</li><li>Real-time WebSocket alerts</li><li>Reports & analytics</li><li>Priority support</li>
+          </ul>
+          <a href="#cta" class="btn btn--primary btn--full">Start Free Trial</a>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__name">Premium</h3>
+            <div class="pricing-card__price"><span class="pricing-card__amount">₹8,000</span><span class="pricing-card__period">/month</span></div>
+          </div>
+          <ul class="pricing-card__features">
+            <li>Up to 2,000 drug SKUs</li><li>Everything in Standard</li><li>ERP/SOAP integration</li><li>Dedicated support</li><li>Custom alert rules</li>
+          </ul>
+          <a href="#cta" class="btn btn--outline btn--full">Start Free Trial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="container">
+      <div class="cta__card">
+        <div class="cta__bg-orb"></div>
+        <h2 class="cta__title">Start monitoring your inventory today</h2>
+        <p class="cta__subtitle">30-day free trial. Set up in under 5 minutes.</p>
+        <form class="cta__form" id="register-form">
+          <div class="cta__form-row">
+            <input type="text" id="reg-name" placeholder="Pharmacy / Hospital name" required class="input">
+            <input type="email" id="reg-email" placeholder="Email address" required class="input">
+          </div>
+          <div class="cta__form-row">
+            <input type="password" id="reg-password" placeholder="Password (min 8 chars)" required class="input">
+            <select id="reg-type" class="input">
+              <option value="pharmacy">Pharmacy</option>
+              <option value="hospital">Hospital</option>
+              <option value="clinic">Clinic</option>
+              <option value="distributor">Distributor</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn--lg btn--primary btn--full">Create Account <span class="btn__arrow">→</span></button>
+        </form>
+        <div class="cta__result" id="register-result" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <div class="footer__brand">💊 MediRoute<p class="footer__tagline">AI-Powered Drug Supply Chain Monitor</p></div>
+        <div class="footer__links"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="dashboard.html">Dashboard</a></div>
+      </div>
+      <div class="footer__bottom"><p>&copy; 2025 MediRoute. Built with ❤️ for healthcare.</p></div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' }); });
+    });
+    window.addEventListener('scroll', () => document.getElementById('main-nav').classList.toggle('nav--scrolled', window.scrollY > 50));
+
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const result = document.getElementById('register-result');
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Creating account...';
+      try {
+        const res = await fetch('/api/v1/auth/register', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('reg-name').value,
+            email: document.getElementById('reg-email').value,
+            password: document.getElementById('reg-password').value,
+            type: document.getElementById('reg-type').value,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          result.style.display = 'block'; result.className = 'cta__result cta__result--success';
+          result.innerHTML = '<h3>🎉 Account Created!</h3><p>You can now log in to the dashboard.</p>';
+          e.target.style.display = 'none';
+        } else {
+          result.style.display = 'block'; result.className = 'cta__result cta__result--error';
+          result.textContent = data.message; btn.disabled = false; btn.innerHTML = 'Create Account <span class="btn__arrow">→</span>';
+        }
+      } catch { result.style.display = 'block'; result.className = 'cta__result cta__result--error'; result.textContent = 'Network error'; btn.disabled = false; btn.innerHTML = 'Create Account →'; }
+    });
+
+    const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('animate-in'); }), { threshold: 0.1 });
+    document.querySelectorAll('.feature-card, .pricing-card').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

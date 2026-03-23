@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — MediRoute</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav nav--scrolled">
+    <div class="nav__container">
+      <a href="/" class="nav__logo"><span class="nav__logo-icon">💊</span> MediRoute</a>
+      <div class="nav__links">
+        <a href="/">Home</a>
+        <span id="pharmacy-name" style="color:var(--accent-end);font-weight:600;"></span>
+        <button class="btn btn--sm btn--ghost" id="logout-btn" style="display:none;" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="dashboard">
+    <div class="container">
+      <!-- Login form (shown when not authenticated) -->
+      <div id="login-section" style="max-width:400px;margin:80px auto;">
+        <h2 style="text-align:center;margin-bottom:24px;">Login to Dashboard</h2>
+        <form id="login-form">
+          <input type="email" id="login-email" placeholder="Email" required class="input" style="margin-bottom:12px;">
+          <input type="password" id="login-password" placeholder="Password" required class="input" style="margin-bottom:12px;">
+          <button type="submit" class="btn btn--primary btn--full">Login</button>
+        </form>
+        <div id="login-error" style="color:var(--error);text-align:center;margin-top:12px;display:none;"></div>
+      </div>
+
+      <!-- Dashboard (shown when authenticated) -->
+      <div id="dashboard-section" style="display:none;">
+        <div class="dashboard__header">
+          <h1 class="dashboard__title">Inventory Dashboard</h1>
+          <button class="btn btn--sm btn--primary" onclick="loadDashboard()">↻ Refresh</button>
+        </div>
+
+        <div class="dashboard__grid">
+          <div class="stat-card"><div class="stat-card__value" id="total-skus">—</div><div class="stat-card__label">Total SKUs</div></div>
+          <div class="stat-card stat-card--danger"><div class="stat-card__value" id="out-of-stock">—</div><div class="stat-card__label">Out of Stock</div></div>
+          <div class="stat-card stat-card--warning"><div class="stat-card__value" id="low-stock">—</div><div class="stat-card__label">Low Stock</div></div>
+          <div class="stat-card stat-card--success"><div class="stat-card__value" id="total-value">—</div><div class="stat-card__label">Inventory Value</div></div>
+        </div>
+
+        <!-- Alerts -->
+        <div style="margin-bottom:32px;">
+          <h3 style="margin-bottom:16px;">Recent Alerts <span id="unread-badge" style="background:var(--error);color:white;padding:2px 8px;border-radius:100px;font-size:0.75rem;"></span></h3>
+          <div id="alerts-list"></div>
+        </div>
+
+        <!-- Inventory Table -->
+        <div>
+          <h3 style="margin-bottom:16px;">Inventory</h3>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead>
+                <tr style="background:var(--bg-tertiary);">
+                  <th style="text-align:left;padding:12px;font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;">Drug</th>
+                  <th style="text-align:left;padding:12px;font-size:0.8rem;color:var(--text-muted);">Category</th>
+                  <th style="text-align:right;padding:12px;font-size:0.8rem;color:var(--text-muted);">Stock</th>
+                  <th style="text-align:center;padding:12px;font-size:0.8rem;color:var(--text-muted);">Status</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let token = localStorage.getItem('mediroute_token');
+    const API = '';
+
+    if (token) showDashboard();
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('login-error');
+      try {
+        const res = await fetch(`${API}/api/v1/auth/login`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: document.getElementById('login-email').value, password: document.getElementById('login-password').value }),
+        });
+        const data = await res.json();
+        if (data.success) { token = data.data.token; localStorage.setItem('mediroute_token', token); showDashboard(); }
+        else { errEl.style.display = 'block'; errEl.textContent = data.message; }
+      } catch { errEl.style.display = 'block'; errEl.textContent = 'Server error'; }
+    });
+
+    function showDashboard() {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('dashboard-section').style.display = 'block';
+      document.getElementById('logout-btn').style.display = 'block';
+      loadDashboard();
+    }
+
+    function logout() { localStorage.removeItem('mediroute_token'); token = null; location.reload(); }
+
+    async function apiFetch(path) {
+      const res = await fetch(`${API}${path}`, { headers: { Authorization: `Bearer ${token}` } });
+      if (res.status === 401) { logout(); return null; }
+      return res.json();
+    }
+
+    async function loadDashboard() {
+      try {
+        const [summary, alerts, inventory] = await Promise.all([
+          apiFetch('/api/v1/inventory/summary'),
+          apiFetch('/api/v1/alerts?limit=5'),
+          apiFetch('/api/v1/inventory?limit=20&sort=-quantity'),
+        ]);
+
+        if (summary?.data?.overview) {
+          const o = summary.data.overview;
+          document.getElementById('total-skus').textContent = o.totalSkus || 0;
+          document.getElementById('out-of-stock').textContent = o.outOfStock || 0;
+          document.getElementById('low-stock').textContent = o.lowStock || 0;
+          document.getElementById('total-value').textContent = '₹' + (o.totalValue || 0).toLocaleString('en-IN');
+        }
+
+        if (alerts?.data) {
+          document.getElementById('unread-badge').textContent = alerts.unreadCount || 0;
+          const list = document.getElementById('alerts-list');
+          list.innerHTML = alerts.data.length === 0 ? '<p style="color:var(--text-muted);">No recent alerts</p>' :
+            alerts.data.map(a => `<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px;">
+              <div style="font-weight:600;font-size:0.9rem;">${a.severity === 'critical' ? '🚨' : a.severity === 'warning' ? '⚠️' : 'ℹ️'} ${a.title}</div>
+              <div style="color:var(--text-muted);font-size:0.8rem;margin-top:4px;">${a.message}</div></div>`).join('');
+        }
+
+        if (inventory?.data) {
+          const statusColors = { out_of_stock: '#ef4444', critical_low: '#f87171', low: '#f59e0b', normal: '#22c55e', overstock: '#3b82f6' };
+          document.getElementById('inventory-table').innerHTML = inventory.data.map(i => `<tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:12px;">${i.drug?.name || 'Unknown'}</td>
+            <td style="padding:12px;color:var(--text-secondary);">${i.drug?.category || '-'}</td>
+            <td style="padding:12px;text-align:right;">${i.quantity}/${i.maxStock}</td>
+            <td style="padding:12px;text-align:center;"><span style="background:${statusColors[i.stockStatus] || '#71717a'}20;color:${statusColors[i.stockStatus] || '#71717a'};padding:4px 10px;border-radius:100px;font-size:0.75rem;font-weight:600;">${(i.stockStatus || 'unknown').replace('_', ' ')}</span></td>
+          </tr>`).join('');
+        }
+      } catch (err) { console.error('Dashboard load error:', err); }
+    }
+  </script>
+</body>
+</html>
