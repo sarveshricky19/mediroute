@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: mediroute
+    runtime: docker
+    repo: https://github.com/sarveshricky19/mediroute
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false
+    healthCheckPath: /health
